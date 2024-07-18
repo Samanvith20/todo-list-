@@ -1,16 +1,20 @@
 import { todo } from "../models/todo model.js";
 
 // create a todo
- export const setTodo = (async (req, res) => {
-  if (!req.body.text) {
-    res.status(400);
-    throw new Error('Please add text field');
-  }
-  const todo = await todo.create({
-    text: req.body.text,
-  });
-  res.status(200).json(todo);
-})
+ export const setTodo = async (req, res) => {
+    try {
+      if (!req.body.text) {
+        res.status(400);
+        throw new Error('Please add text field');
+      }
+      const newTodo = await todo.create({
+        text: req.body.text,
+      });
+      res.status(200).json(newTodo);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 
 // get all todos
 
